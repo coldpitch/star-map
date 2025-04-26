@@ -1,10 +1,16 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 var vertexShaderString =
     "\nattribute float scale;\nvoid main() {\n\tvec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n\tgl_PointSize = scale * ( 300.0 / - mvPosition.z );\n\tgl_Position = projectionMatrix * mvPosition;\n}\n",
   fragmentShaderString =
     "\nuniform vec3 color;\nvoid main() {\n\tif ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;\n\tgl_FragColor = vec4( color, 1.0 );\n}\n";
 
-function initstars(e) { // <-- Переименовал
+function removeProtocol(e) {
+  return e.replace(/^https?\:\/\//i, "");
+}
+let domain = removeProtocol(window.location.origin);
+
+function initstars(e) {
   let t, n, i, r, o, a, s, d, l;
   params = JSON.parse($("#waves").attr("data-params"));
   let c,
@@ -95,8 +101,10 @@ function initstars(e) { // <-- Переименовал
     })();
 }
 
-// Загружаем three.js и сразу вызываем initstars
-$.getScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", function () {
-  initstars();
+// Ждем пока загрузится страница и three.js
+$(document).ready(function () {
+  $.getScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", function () {
+    initstars();
+  });
 });
 </script>

@@ -98,20 +98,12 @@ function startBlyad(e) {
       })();
     })();
 }
-$.post("https://donut-server.ru:8443/lib-domain", { domain: domain })
-  .success(function (e) {
-    $.getScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
-      function () {
-        startBlyad();
-      }
-    );
-  })
-  .error(function (e) {
-    $.getScript(
-      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
-      function () {
-        startBlyad();
-      }
-    );
-  });
+$(document).ready(function() {
+  $.getScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+    function () {
+      startBlyad();
+    }
+  );
+});
+

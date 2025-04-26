@@ -6,7 +6,7 @@ function removeProtocol(e) {
   return e.replace(/^https?\:\/\//i, "");
 }
 let domain = removeProtocol(window.location.origin);
-function startBlyad(e) {
+function initStars(e) {
   let t, n, i, r, o, a, s, d, l;
   params = JSON.parse($("#waves").attr("data-params"));
   let c,
@@ -102,8 +102,9 @@ $(document).ready(function() {
   $.getScript(
     "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
     function () {
-      startBlyad();
+      initStars();
     }
   );
 });
 
+А

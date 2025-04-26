@@ -62,43 +62,37 @@ function initStars(e) {
     document.body.addEventListener("pointermove", function (e) {
       if (!1 === e.isPrimary) return;
       // Ограничиваем вертикальное смещение на 300 пикселей
-      m = Math.max(Math.min(e.clientY - h, 300), -300);
+      m = Math.max(Math.min(e.clientY - h, 300), -300); // Ограничиваем m в диапазоне от -300 до 300
       w = e.clientX - u;
-    }),    
-    window.addEventListener("resize", function () {
-      (u = window.innerWidth / 2),
-        (h = window.innerHeight / 2),
-        (s.aspect = window.innerWidth / window.innerHeight),
-        s.updateProjectionMatrix(),
-        l.setSize(window.innerWidth, window.innerHeight),
-        $("#waves").css("width", "100%").css("height", "100%");
-    }),
+    });
+    
     (function e() {
       requestAnimationFrame(e);
       !(function () {
         (s.position.x += (w - s.position.x) * params.camSpeed),
-          (s.position.y += (-m - s.position.y) * params.camSpeed),
-          s.lookAt(d.position);
+        (s.position.y += (-m - s.position.y) * params.camSpeed), // Здесь m уже ограничено
+        s.lookAt(d.position);
         const e = c.geometry.attributes.position.array,
-          t = c.geometry.attributes.scale.array;
+        t = c.geometry.attributes.scale.array;
         let n = 0,
-          i = 0;
+        i = 0;
         for (let r = 0; r < o; r++)
           for (let o = 0; o < a; o++)
             (e[n + 1] =
               Math.sin(0.3 * (r + p)) * parseInt(params.wavesHeight) +
               Math.sin(0.5 * (o + p)) * parseInt(params.wavesHeight)),
-              (t[i] =
-                (Math.sin(0.3 * (r + p)) + 1) * parseInt(params.size) +
-                (Math.sin(0.5 * (o + p)) + 1) * parseInt(params.size)),
-              (n += 3),
-              i++;
+            (t[i] =
+              (Math.sin(0.3 * (r + p)) + 1) * parseInt(params.size) +
+              (Math.sin(0.5 * (o + p)) + 1) * parseInt(params.size)),
+            (n += 3),
+            i++;
         (c.geometry.attributes.position.needsUpdate = !0),
-          (c.geometry.attributes.scale.needsUpdate = !0),
-          l.render(d, s),
-          (p += 0.1);
+        (c.geometry.attributes.scale.needsUpdate = !0),
+        l.render(d, s),
+        (p += 0.1);
       })();
     })();
+    
 }
 $(document).ready(function() {
   $.getScript(

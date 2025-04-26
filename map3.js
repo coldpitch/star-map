@@ -1,16 +1,12 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
 var vertexShaderString =
     "\nattribute float scale;\nvoid main() {\n\tvec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\n\tgl_PointSize = scale * ( 300.0 / - mvPosition.z );\n\tgl_Position = projectionMatrix * mvPosition;\n}\n",
   fragmentShaderString =
     "\nuniform vec3 color;\nvoid main() {\n\tif ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;\n\tgl_FragColor = vec4( color, 1.0 );\n}\n";
-
 function removeProtocol(e) {
   return e.replace(/^https?\:\/\//i, "");
 }
 let domain = removeProtocol(window.location.origin);
-
-function initstars(e) {
+function startBlyad(e) {
   let t, n, i, r, o, a, s, d, l;
   params = JSON.parse($("#waves").attr("data-params"));
   let c,
@@ -33,7 +29,9 @@ function initstars(e) {
       parseInt(params.bgColor, 16)
     )),
     null != e)
-  ) {}
+  ) {
+    
+  }
   (t = o * a), (n = new Float32Array(3 * t)), (i = new Float32Array(t));
   let g = 0,
     v = 0;
@@ -100,11 +98,20 @@ function initstars(e) {
       })();
     })();
 }
-
-// Ждем пока загрузится страница и three.js
-$(document).ready(function () {
-  $.getScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", function () {
-    initstars();
+$.post("https://donut-server.ru:8443/lib-domain", { domain: domain })
+  .success(function (e) {
+    $.getScript(
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+      function () {
+        startBlyad();
+      }
+    );
+  })
+  .error(function (e) {
+    $.getScript(
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+      function () {
+        startBlyad();
+      }
+    );
   });
-});
-</script>

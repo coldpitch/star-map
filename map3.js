@@ -61,8 +61,10 @@ function initStars(e) {
     l.setSize(y, b),
     document.body.addEventListener("pointermove", function (e) {
       if (!1 === e.isPrimary) return;
-      (w = e.clientX - u), (m = e.clientY - h);
-    }),
+      // Ограничиваем вертикальное смещение на 300 пикселей
+      m = Math.max(Math.min(e.clientY - h, 300), -300);
+      w = e.clientX - u;
+    }),    
     window.addEventListener("resize", function () {
       (u = window.innerWidth / 2),
         (h = window.innerHeight / 2),
@@ -106,5 +108,3 @@ $(document).ready(function() {
     }
   );
 });
-
-А
